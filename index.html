@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html style="overflow-x: hidden;">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body style="overflow-x: hidden; position: relative;">
+	<div><iframe width="300" height="60" src="https://vocaroo.com/embed/16hywwvyHI2w?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+    <h1 style="text-align: left; left: 200px;">
+	<span id="breathing-button" style="text-align: left; height: 100px; width: 100px; background-color: rgb(144, 223, 255); border-radius: 50%; display: inline-block;"></span>	
+	</h1>
+	
+  </body>
+  
+	<script>
+		
+    function setup() {
+			createCanvas(screen.width*2, screen.height*1.2);
+	w = new Walker();
+  
+}
+let myAnimation = anime({
+  targets: 'h1',
+  translateX: 650,
+  direction: 'alternate',
+  loop: true,
+  easing: 'linear',
+  duration: 10000
+});
+
+
+function draw() {
+	background(250, 110, 136);
+	w.display();
+	w.update();
+}
+
+function Walker() {
+	this.pos = createVector(width / 2, height / 2);
+	this.vel = createVector(0, 0);
+	this.display = function() {
+		fill(255);
+		stroke(250, 110, 136);
+		ellipse(this.pos.x, this.pos.y, 130, 130);
+	}
+	this.update = function() {
+		// Whenever the ball hits to the walls
+		// the ball has a new velocity with the opposite direction
+		if (this.pos.x <= 20 || this.pos.x >= width - 20) {
+			this.vel.x = this.vel.x * -1;
+		} else if (this.pos.y <= 20 || this.pos.y >= height - 20) {
+			this.vel.y = this.vel.y * -1;
+		}
+		// Without this, speed of the ball could go very high as soon as 
+		// it hits the walls
+		this.vel.setMag(0.76);
+		// This is where the random acceleration value is set
+		this.acc = p5.Vector.fromAngle(random(TWO_PI));
+		this.acc.setMag(0.05);
+		this.vel.add(this.acc);
+		this.pos.add(this.vel);
+	}
+}
+  </script>
+  <style>
+	#breathing-button {
+    width: 180px;
+    padding: 12px;
+    margin: 5px auto;
+    border: 1px solid #3cc8b4;
+    -webkit-animation: breathing 5s ease-out infinite normal;
+    animation: breathing 5s ease-out infinite normal;
+    font-family:'Lantinghei SC';
+    font-size: 16px;
+    background: #3cc8b4;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 2px;
+    text-align: left;  
+    left: 0px;  
+    position: relative;
+    }
+
+
+@-webkit-keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+
+
+	</style>
+</html>
